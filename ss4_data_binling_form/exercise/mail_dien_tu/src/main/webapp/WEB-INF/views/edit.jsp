@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Kết Quả</h3>
+<h3>Result</h3><br>
 <h4>Languages: ${email.getLanguages()}</h4>
 <h4>Page Size: ${email.getPageSize()}</h4>
 <span>Spam Filter: <c:if test="${email.isSpamsFillter()==true}">
