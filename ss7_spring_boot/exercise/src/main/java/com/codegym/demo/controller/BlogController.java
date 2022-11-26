@@ -60,4 +60,23 @@ public class BlogController {
         modelAndView.addObject("message", "Blog updated successfully");
         return modelAndView;
     }
+
+    @GetMapping("/delete-blog/{id}")
+    public ModelAndView showDeleteForm(@PathVariable Long id) {
+        Optional<Blog> blog = blogService.findById(id);
+        if (blog.isPresent()) {
+            ModelAndView modelAndView = new ModelAndView("/blog/delete");
+            modelAndView.addObject("blog", blog.get());
+            return modelAndView;
+
+        } else {
+            return new ModelAndView("/error.404");
+        }
+    }
+
+    @PostMapping("/delete-blog")
+    public String deleteBlog(@ModelAttribute("blog") Blog blog) {
+        blogService.remove(blog.getId());
+        return "redirect:blogs";
+    }
 }
