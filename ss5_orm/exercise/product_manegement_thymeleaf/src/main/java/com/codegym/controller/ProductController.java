@@ -17,17 +17,6 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-//    static {
-//        try {
-//            SessionFactory sessionFactory = new Configuration()
-//                    .configure("hibernate.conf.xml")
-//                    .buildSessionFactory();
-//            sessionFactory.close();
-//        } catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Autowired
     private IProductService productService;
 
@@ -45,9 +34,10 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public String save(Product product) {
+    public String save(Product product, RedirectAttributes redirectAttributes) {
         product.setId((int) (Math.random() * 10000));
         productService.save(product);
+        redirectAttributes.addFlashAttribute("mess", "Create product successfully!");
         return "redirect:/product";
     }
 
