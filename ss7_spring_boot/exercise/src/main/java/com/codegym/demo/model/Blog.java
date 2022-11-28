@@ -1,6 +1,7 @@
 package com.codegym.demo.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Blog {
@@ -10,17 +11,30 @@ public class Blog {
     private String name;
     private String content;
     private String author;
+    @Column(columnDefinition = "date")
     private String dayOfWrite;
+
+    @ManyToOne
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Blog() {
     }
 
-    public Blog(Long id, String name, String content, String author, String dayOfWrite) {
+    public Blog(Long id, String name, String content, String author, String dayOfWrite, Category category) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.author = author;
         this.dayOfWrite = dayOfWrite;
+        this.category = category;
     }
 
     public Long getId() {

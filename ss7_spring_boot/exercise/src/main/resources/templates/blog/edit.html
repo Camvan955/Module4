@@ -15,10 +15,6 @@
 <form th:action="@{/edit-blog}" th:object="${blog}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
-        private String name;
-        private String content;
-        private String author;
-        private String dayOfWrite;
         <tr>
             <td>Name:</td>
             <td><input type="text" th:field="*{name}"/></td>
@@ -33,7 +29,17 @@
         </tr>
         <tr>
             <td>Day Of Write:</td>
-            <td><input type="text" th:field="*{dayOfWrite}"/></td>
+            <td><input type="date" th:field="*{dayOfWrite}"/></td>
+        </tr>
+        <tr>
+            <td>Name Category</td>
+            <td>
+                <select th:field="*{category.id}">
+                    <option th:value="1" th:text="'Tiểu thuyết'"></option>
+                    <option th:value="2" th:text="'Sách'"></option>
+                    <option th:value="3" th:text="'Tự do'"></option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td></td>

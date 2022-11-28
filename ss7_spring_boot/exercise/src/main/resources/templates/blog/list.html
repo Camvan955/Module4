@@ -7,25 +7,39 @@
 <body>
 <a href="/create-blog">Create new blog</a>
 <h1>Blogs</h1>
+
+<form class="d-flex">
+    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
 <table border="1">
     <tr>
+        <th> STT</th>
         <th>Name blog</th>
         <th>Content</th>
         <th>Author</th>
         <th>Day Of Write</th>
-        <th></th>
+        <th>Category</th>
+        <th colspan="2"> Action</th>
     </tr>
-    <th:block th:each="blog : ${blogs}">
+    <th:block th:each="blog, stt : ${blogPage}" >
         <tr>
+            <td th:text="${stt.count} + ${blogPage.number} * ${blogPage.size}"></td>
             <td th:text="${blog.name}"></td>
             <td th:text="${blog.content}"></td>
             <td th:text="${blog.author}"></td>
             <td th:text="${blog.dayOfWrite}"></td>
+            <td th:text="${blog.category.name}"></td>
             <td><a th:href="@{/edit-blog/__${blog.id}__ }">Edit</a></td>
             <td><a th:href="@{/delete-blog/__${blog.id}__ }">Delete</a></td>
         </tr>
         </tr>
     </th:block>
 </table>
+<!--    Phân trang-->
+<a th:href="@{/blogs(page=${blogPage.number - 1})}" th:if="${blogPage.hasPrevious()}">Previous</a>
+<span th:text="${blogPage.number + 1}+'/'+${blogPage.totalPages}"></span>
+<a th:href="@{blogs(page=${blogPage.number + 1})}" th:if="${blogPage.hasNext()}">Next</a>
 </body>
 </html>

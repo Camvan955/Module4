@@ -28,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("product", new Product());
+    public String create(@ModelAttribute("product") Product product, Model model) {
+        model.addAttribute("product", product);
         return "create";
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String update(Product product, RedirectAttributes redirect) {
+    public String update(@ModelAttribute("product") Product product, RedirectAttributes redirect) {
         productService.update(product.getId(), product);
         redirect.addFlashAttribute("success", "Update product successfully!");
         return "redirect:/product";
