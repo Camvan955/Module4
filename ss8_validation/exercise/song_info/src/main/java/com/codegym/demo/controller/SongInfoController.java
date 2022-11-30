@@ -1,7 +1,9 @@
 package com.codegym.demo.controller;
 
+import com.codegym.demo.dto.SongInfoDto;
 import com.codegym.demo.model.SongInfo;
 import com.codegym.demo.service.ISongInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,19 +34,20 @@ public class SongInfoController {
 
     @GetMapping("/create-songInfo")
     public String showCreateForm(Model model) {
-        model.addAttribute("songInfo", new SongInfo());
+        model.addAttribute("songInfoDto", new SongInfoDto());
         return "/songInfo/create";
     }
 
     @PostMapping("/create-songInfo")
-    public ModelAndView saveSongInfo(@Validated @ModelAttribute("songInfo") SongInfo songInfo, BindingResult bindingResult) {
+    public ModelAndView saveSongInfo(@Validated @ModelAttribute("songInfoDto") SongInfoDto songInfoDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             ModelAndView modelAndView = new ModelAndView("/songInfo/create");
             return modelAndView;
         }
+        SongInfo songInfo = new SongInfo();
+        BeanUtils.copyProperties(songInfoDto,songInfo);
         songInfoService.save(songInfo);
         ModelAndView modelAndView = new ModelAndView("/songInfo/create");
-        modelAndView.addObject("songInfo", new SongInfo());
         modelAndView.addObject("message", "New song info created successfully");
         return modelAndView;
     }
@@ -53,13 +56,17 @@ public class SongInfoController {
     @GetMapping("/edit-songInfo/{id}")
     public String showFromEdit(@PathVariable int id, Model model){
         Optional<SongInfo> songInfo = songInfoService.findByTd(id);
-        model.addAttribute("songInfo", songInfo.get());
-        return "songInfo/edit";
+            model.addAttribute("songInfoDto", songInfo.get());
+            return "songInfo/edit";
     }
 
     @PostMapping("/edit-songInfo")
-    public String edit(@ModelAttribute("songInfo") SongInfo songInfo, Model model, RedirectAttributes redirectAttributes) {
-
+    public String edit( @Validated @ModelAttribute("songInfoDto") SongInfoDto songInfoDto,BindingResult bindingResult , Model model, RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()){
+            return "songInfo/edit";
+        }
+        SongInfo songInfo = new SongInfo();
+        BeanUtils.copyProperties(songInfoDto, songInfo);
         songInfoService.save(songInfo);
         model.addAttribute("songInfo", songInfo);
         redirectAttributes.addFlashAttribute("message", " Song Info update Successfully");

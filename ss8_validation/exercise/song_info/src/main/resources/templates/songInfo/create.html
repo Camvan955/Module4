@@ -14,7 +14,7 @@
     <p th:text="${message}"></p>
 </th:block>
 
-<form th:action="@{/create-songInfo}" th:object="${songInfo}" method="post">
+<form th:action="@{/create-songInfo}" th:object="${songInfoDto}" method="post">
     <table>
         <tr>
             <td>Name:</td>

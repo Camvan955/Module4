@@ -1,6 +1,6 @@
 package com.codegym.demo.service.impl;
 
-import com.codegym.demo.model.SongInfo;
+import com.codegym.demo.dto.SongInfoDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,7 +10,7 @@ public interface IGeneralService<T> {
 
     void save(T t);
 
-    Page<SongInfo> findAll(Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
     Optional<T> findByTd(int id);
 

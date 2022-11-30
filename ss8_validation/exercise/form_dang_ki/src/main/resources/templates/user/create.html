@@ -14,7 +14,7 @@
     <p th:text="${message}"></p>
 </th:block>
 
-<form th:action="@{/create-user}" th:object="${user}" method="post">
+<form th:action="@{/create-user}" th:object="${userDto}" method="post">
     <table>
         <tr>
             <td>First Name:</td>
