@@ -43,7 +43,6 @@ public class UserController {
     public ModelAndView saveUser(@Validated @ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
 
         // cách 2
-
 //        new UserDto().validate(userDto, bindingResult);
 
         if(bindingResult.hasErrors()){
