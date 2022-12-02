@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách giỏ hàng</title>
+</head>
+<body>
+
+<div class="col-sm-12" style="background-color:gainsboro;height: 70px"><h1 style="text-align: center;line-height: 70px">
+    GIỎ HÀNG CỦA BẠN</h1></div>
+
+<p>
+    <a href="/shop">Quay lại danh sách</a>
+</p>
+
+<form th:action="@{/shop}" th:object="${cart}" method="post">
+
+    <table border="1">
+        <tr>
+            <th>Sản Phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+        </tr>
+        <tr th:each="product: ${cart.products}">
+            <td th:text="${product.getKey().name}"></td>
+            <td>
+                <a id="decrease_button" th:text="${'-'}"></a>
+                <span th:text="${product.getValue()}"></span>
+                <a id="increase_button" th:href="@{/add/__${product.getKey().id}__(action='show')}"
+                   th:text="${'Mua thêm'}"></a>
+            </td>
+            <td th:text="${product.getKey().price}"></td>
+        </tr>
+    </table>
+    <h3>Tổng số sản phẩm trong giỏ hàng: <span th:text="${cart.countItemQuantity()}"></span></h3>
+    <h3><span>Tổng tiền: </span></h3>
+    <span th:text="${cart.countTotalPayment()}">
+    </span>
+    <div>
+        <a th:href="@{/pay}" class="btn btn-success">Thanh toán</a>
+    </div>
+</form>
+</body>
+</html>

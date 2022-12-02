@@ -8,16 +8,20 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private long code;
     private boolean flag;
 
     @ManyToOne
-    @JoinColumn(name = "id_book",referencedColumnName = "id")
     private Book book;
 
     public Orders() {
     }
 
-//    public Orders(int id, Book book, Boolean flag) {
+    public Orders(Book book) {
+        this.book = book;
+    }
+
+    //    public Orders(int id, Book book, Boolean flag) {
 //        this.id = id;
 //        this.book = book;
 //        this.flag = flag;
@@ -25,10 +29,19 @@ public class Orders {
 //    }
 
 
-    public Orders(int id, boolean flag, Book book) {
+    public Orders(int id, long code, boolean flag, Book book) {
         this.id = id;
+        this.code = code;
         this.flag = flag;
         this.book = book;
+    }
+
+    public long getCode() {
+        return code;
+    }
+
+    public void setCode(long code) {
+        this.code = code;
     }
 
     public int getId() {

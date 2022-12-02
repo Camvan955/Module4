@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 
 @Controller
 @RequestMapping("book")
@@ -29,18 +31,18 @@ public class BookController {
     @GetMapping("/borrow/{id}")
     public String borrow(@PathVariable int id, Model model) {
         Book book = bookService.findById(id).get();
-        model.addAttribute("book", book);
+        model.addAttribute("borrowBook", book);
+        model.addAttribute("order", new Orders(book));
         return "book/borrow";
     }
 
     @PostMapping("/borrow")
-    public String borrow(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes) {
+    public String borrow(@ModelAttribute("order") Orders order, RedirectAttributes redirectAttributes) {
         int code = (int) (Math.random() * (99999 - 10000)) + 10000;
-        Orders orders = new Orders(code,true, book);
-        orderService.save(orders);
-        bookService.removeById(book.getId());
+        order.setCode(code);
+        orderService.save(order);
         redirectAttributes.addFlashAttribute("mess", "Borrow successful");
-        redirectAttributes.addFlashAttribute("mess1", "The book you are borrowing is: " + book.getName() + " ,code borrow " + code);
+        redirectAttributes.addFlashAttribute("mess1", "The book you are borrowing is: " + order.getBook().getName() + " ,code borrow " + code);
         return "redirect:/book";
     }
 

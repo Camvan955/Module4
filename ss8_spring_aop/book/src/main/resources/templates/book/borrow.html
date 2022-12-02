@@ -18,22 +18,23 @@
         style="text-align: center;line-height: 70px  ">BORROW BOOK</h1></div>
 <div style="margin:30px">
     <p><a href="/book" class="btn btn-primary">Return List</a></p>
-    <form th:action="@{/book/borrow}" th:object="${book}" method="post">
-        <input type="hidden" th:field="*{id}">
+    <form th:action="@{/book/borrow}" th:object="${order}" method="post">
 
         <div class="form-group row">
             <label class="col-sm-3 col-form-label" th:for="name">Name Book:</label>
             <div class="col-sm-6">
-                <input type="text" th:field="*{name}" class="form-control" required>
-                <p th:errors="*{name}" class="text-danger"></p>
+                <input type="text" readonly th:value="*{book.name}" class="form-control" required>
+<!--                <p th:errors="${borrowBook.name}" class="text-danger"></p>-->
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-3 col-form-label" th:for="author">Author:</label>
             <div class="col-sm-6">
-                <input type="text" th:field="*{author}" class="form-control" required>
-                <p th:errors="*{author}" class="text-danger"></p>
+                <input type="text" readonly th:value="*{book.author}" class="form-control" required>
+<!--                <p th:errors="${borrowBook.author}" class="text-danger"></p>-->
             </div>
+            <input type="hidden" th:field="*{flag}" value="true">
+            <input type="hidden" th:field="*{book}">
         </div>
 
         <div class="form-group row">
