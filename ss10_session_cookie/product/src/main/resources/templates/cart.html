@@ -31,12 +31,14 @@
                     th:text="${'Mua thêm'}"></a></td>
         </tr>
     </table>
-    <h3>Tổng số sản phẩm trong giỏ hàng: <span th:text="${cart.countItemQuantity()}"></span></h3>
+    <h3>Tổng số mặt hàng trong giỏ hàng: <span th:text="${cart.countItemQuantity()}"></span></h3>
+    <h3>Tổng số sản phẩm trong giỏ hàng: <span th:text="${cart.countProductQuantity()}"></span></h3>
+
     <h3><span>Tổng tiền: </span></h3>
     <span th:text="${cart.countTotalPayment()}">
     </span>
     <div>
-        <a th:href="@{/pay}" class="btn btn-success">Thanh toán</a>
+        <button><a th:href="@{/pay}" class="btn btn-success">Thanh toán</a></button>
     </div>
 </form>
 </body>

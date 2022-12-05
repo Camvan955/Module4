@@ -1,9 +1,11 @@
 package com.codegym.demo.service.impl;
 
 import com.codegym.demo.model.Blog;
+import com.codegym.demo.model.Category;
 import com.codegym.demo.repository.IBlogRepository;
 import com.codegym.demo.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,22 +26,22 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public Page<Blog> findByNameOrAuthor(String name, Pageable pageable) {
-        return blogRepository.findByNameOrAuthor(name, name,pageable);
-    }
-
-    @Override
-    public Optional<Blog> findById(Long id) {
-        return blogRepository.findById(id);
-    }
-
-    @Override
     public void save(Blog blog) {
         blogRepository.save(blog);
     }
 
     @Override
-    public void remove(Long id) {
-        blogRepository.deleteById(id);
+    public void update(Blog blog) {
+        blogRepository.save(blog);
+    }
+
+    @Override
+    public Optional<Blog> findById(long id) {
+        return blogRepository.findById(id);
+    }
+
+    @Override
+    public List<Blog> findByCategory(Category category) {
+        return blogRepository.findByCategory(category);
     }
 }

@@ -1,5 +1,7 @@
 package com.codegym.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,7 +16,8 @@ public class Blog {
     @Column(columnDefinition = "date")
     private String dayOfWrite;
 
-    @ManyToOne
+    @ManyToOne()
+    @JsonManagedReference
     private Category category;
 
     public Category getCategory() {
