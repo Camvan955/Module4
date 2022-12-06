@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+</head>
+<body>
+<h1>Create Blog</h1>
+<p>
+    <a href="/blogs">Blog list</a>
+</p>
+
+<button type="button" class="btn btn-outline-primary">
+    <a href="/category/list" style="text-decoration: none">List Category</a>
+</button>
+
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+
+<form th:action="@{/create-blog}" th:object="${blog}" method="post">
+    <table>
+        <tr>
+            <td>Name Blog:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Content Blog:</td>
+            <td><input type="text" th:field="*{content}"/></td>
+        </tr>
+        <tr>
+            <td>Author Blog:</td>
+            <td><input type="text" th:field="*{author}"/></td>
+        </tr>
+        <tr>
+            <td>Day Of Write Blog:</td>
+            <td><input type="date" th:field="*{dayOfWrite}"/></td>
+        </tr>
+        <tr>
+            <td>Name Category</td>
+            <td>
+                <select>
+                    <option>Tiểu Thuyết</option>
+                    <option>Sách</option>
+                    <option>Tự do</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create blog"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
