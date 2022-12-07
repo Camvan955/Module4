@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Facility {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int area;
@@ -20,8 +20,8 @@ public class Facility {
     @ManyToOne
     private FacitilyType facitilyType;
 
-   @ManyToOne
-   private RentType rentType;
+    @ManyToOne
+    private RentType rentType;
 
     public Facility() {
     }
