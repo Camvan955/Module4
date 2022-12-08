@@ -25,10 +25,13 @@ public class Employee {
     @ManyToOne
     private Division division;
 
+    @ManyToOne
+    private User user;
+
     public Employee() {
     }
 
-    public Employee(int id, String name, Date dateOfBirth, String idCard, Double salary, String phoneNumber, String email, String address, Position position, EducationDegree educationDegree, Division division) {
+    public Employee(int id, String name, Date dateOfBirth, String idCard, Double salary, String phoneNumber, String email, String address, Position position, EducationDegree educationDegree, Division division, User user) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -40,6 +43,7 @@ public class Employee {
         this.position = position;
         this.educationDegree = educationDegree;
         this.division = division;
+        this.user = user;
     }
 
     public int getId() {
@@ -128,5 +132,13 @@ public class Employee {
 
     public void setDivision(Division division) {
         this.division = division;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
