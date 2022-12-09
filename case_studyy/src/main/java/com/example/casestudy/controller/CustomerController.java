@@ -1,27 +1,59 @@
 package com.example.casestudy.controller;
 
+import com.example.casestudy.dto.CustomerDto;
 import com.example.casestudy.model.Customer;
 import com.example.casestudy.service.ICustomerService;
+import com.example.casestudy.service.ICustomerTypeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("customer")
+@RequestMapping("")
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
-    @GetMapping("")
-    public String ListCustomer(@RequestParam(defaultValue = "") String search, @PageableDefault(page = 0, size = 5) Pageable pageable, ModelMap modelMap){
+    @Autowired
+    private ICustomerTypeService customerTypeService;
+
+    @GetMapping("customers")
+    public String ListCustomer(@RequestParam(defaultValue = "") String search, @PageableDefault(page = 0, size = 3) Pageable pageable, ModelMap modelMap) {
         Page<Customer> customerPage = customerService.findAll(pageable);
-//        modelMap.addAttribute("listCustomerDto",)
-    return null;
+        modelMap.addAttribute("listCustomerDto", customerPage);
+        return "customer/list";
     }
+
+    @GetMapping("create-customer")
+    public String createCustomer(Model model) {
+        model.addAttribute("customerTypeList", customerTypeService.findAll());
+        model.addAttribute("customerDto", new CustomerDto());
+        return "customer/create";
+    }
+
+    @PostMapping("/save-customer")
+    public ModelAndView saveCustomer(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("customer/create");
+            modelAndView.addObject("message", "Thêm mới khách hàng không thành công!");
+            return modelAndView;
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
+        customerService.save(customer);
+        ModelAndView modelAndView = new ModelAndView("customer/create");
+        modelAndView.addObject("message", "Thêm mới khách hàng thành công!");
+        return modelAndView;
+    }
+
+
 }

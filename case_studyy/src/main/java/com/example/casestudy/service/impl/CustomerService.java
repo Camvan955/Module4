@@ -29,6 +29,11 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Optional<Customer> findById(int id) {
-        return null;
+        return customerRepository.findById(id);
+    }
+
+    @Override
+    public void remove(int id) {
+        customerRepository.deleteById(id);
     }
 }

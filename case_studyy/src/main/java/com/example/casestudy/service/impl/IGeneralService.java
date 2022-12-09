@@ -11,4 +11,6 @@ public interface IGeneralService<T> {
     Page<T> findAll(Pageable pageable);
 
     Optional<T> findById(int id);
+
+    void remove(int id);
 }

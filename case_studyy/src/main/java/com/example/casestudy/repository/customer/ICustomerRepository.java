@@ -1,6 +1,7 @@
 package com.example.casestudy.repository.customer;
 
 import com.example.casestudy.model.Customer;
+import com.example.casestudy.model.CustomerType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
