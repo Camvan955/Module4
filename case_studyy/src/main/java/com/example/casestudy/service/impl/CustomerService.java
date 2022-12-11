@@ -18,8 +18,8 @@ public class CustomerService implements ICustomerService {
     private ICustomerRepository customerRepository;
 
     @Override
-    public void save(Customer customer) {
-        customerRepository.save(customer);
+    public Customer save(Customer customer) {
+       return customerRepository.save(customer);
     }
 
     @Override
@@ -35,5 +35,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public void remove(int id) {
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Customer> search(String name, String email, String customerType, Pageable pageable) {
+        return customerRepository.search(name, email,customerType, pageable);
     }
 }

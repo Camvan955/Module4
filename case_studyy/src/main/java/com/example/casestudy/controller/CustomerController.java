@@ -16,6 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -25,6 +28,7 @@ public class CustomerController {
 
     @Autowired
     private ICustomerTypeService customerTypeService;
+
 
     @GetMapping("customers")
     public String ListCustomer(@RequestParam(defaultValue = "") String search, @PageableDefault(page = 0, size = 3) Pageable pageable, ModelMap modelMap) {
@@ -53,6 +57,42 @@ public class CustomerController {
         ModelAndView modelAndView = new ModelAndView("customer/create");
         modelAndView.addObject("message", "Thêm mới khách hàng thành công!");
         return modelAndView;
+    }
+
+    @GetMapping("/edit-customer/{id}")
+    public String edit(@RequestParam(defaultValue = "") String search
+            , @PageableDefault(page = 0, size = 3) Pageable pageable
+            ,@PathVariable("id") Integer id, Model model) {
+        Optional<Customer> customer = customerService.findById(id);
+        model.addAttribute("customerTypeList", customerTypeService.findAll());
+        model.addAttribute("customerDto", customer.get());
+        return "customer/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult , RedirectAttributes redirect, Model model) {
+        new CustomerDto().validate(customerDto,bindingResult);
+        if(bindingResult.hasErrors()){
+            return "customer/edit";
+        }
+        Customer customer=new Customer();
+        BeanUtils.copyProperties(customerDto,customer);
+        customerService.save(customer);
+        redirect.addFlashAttribute("message", "Sửa thành công!");
+        return "redirect:/customer";
+    }
+
+//    @PostMapping("/delete-customer/{id}")
+//    public String delete(@RequestParam int id) {
+//        customerService.remove(id);
+//        return "redirect:/customer/";
+//    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam int id,RedirectAttributes redirectAttributes) {
+        customerService.remove(id);
+        redirectAttributes.addFlashAttribute("message","Xoá thành công");
+        return "redirect:/customers";
     }
 
 

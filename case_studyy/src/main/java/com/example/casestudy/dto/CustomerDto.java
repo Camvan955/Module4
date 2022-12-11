@@ -1,12 +1,14 @@
 package com.example.casestudy.dto;
 
 import com.example.casestudy.model.CustomerType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-public class CustomerDto {
+public class CustomerDto implements Validator {
 
     private int id;
 
@@ -115,5 +117,17 @@ public class CustomerDto {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        CustomerDto customerDto = (CustomerDto) target;
     }
 }
