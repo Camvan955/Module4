@@ -2,6 +2,7 @@ package com.example.casestudy.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -16,17 +17,20 @@ public class Employee {
     private String email;
     private String address;
 
-    @ManyToOne
+    @ManyToOne()
     private Position position;
 
-    @ManyToOne
+    @ManyToOne()
     private EducationDegree educationDegree;
 
-    @ManyToOne
+    @ManyToOne()
     private Division division;
 
-    @ManyToOne
+    @ManyToOne()
     private User user;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Contract> contracts;
 
     public Employee() {
     }

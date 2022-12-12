@@ -1,12 +1,11 @@
 package com.example.casestudy.dto;
 
-import com.example.casestudy.model.CustomerType;
+import com.example.casestudy.model.customer.CustomerType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 
 public class CustomerDto implements Validator {
 
@@ -26,7 +25,7 @@ public class CustomerDto implements Validator {
     @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Email chưa đúng định dạng(***@**.***)")
     private String email;
-    @NotEmpty(message = " không được rỗng")
+    @NotEmpty(message = "địa chỉ không được rỗng")
     private String address;
 
     private CustomerType customerType;

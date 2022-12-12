@@ -1,7 +1,10 @@
 package com.example.casestudy.model;
 
+import com.example.casestudy.model.customer.Customer;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Contract {
@@ -10,28 +13,34 @@ public class Contract {
     private int id;
     private Date startDate;
     private Date endDate;
-    private Double deposite;
+    private Double deposit;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Employee employee;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Facility facility;
 
-    @ManyToOne
+    @ManyToOne()
     private Customer customer;
+    
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    private List<ContractDetail> contractDetails;
+
 
     public Contract() {
     }
 
-    public Contract(int id, Date startDate, Date endDate, Double deposite, Employee employee, Facility facility, Customer customer) {
+    public Contract(int id, Date startDate, Date endDate, Double deposit, Employee employee, Facility facility, Customer customer, List<ContractDetail> contractDetails, Contract contract) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.deposite = deposite;
+        this.deposit = deposit;
         this.employee = employee;
         this.facility = facility;
         this.customer = customer;
+        this.contractDetails = contractDetails;
+
     }
 
     public int getId() {
@@ -58,12 +67,12 @@ public class Contract {
         this.endDate = endDate;
     }
 
-    public Double getDeposite() {
-        return deposite;
+    public Double getDeposit() {
+        return deposit;
     }
 
-    public void setDeposite(Double deposite) {
-        this.deposite = deposite;
+    public void setDeposite(Double deposit) {
+        this.deposit = deposit;
     }
 
     public Employee getEmployee() {
@@ -89,4 +98,14 @@ public class Contract {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+
+    public List<ContractDetail> getContractDetails() {
+        return contractDetails;
+    }
+
+    public void setContractDetails(List<ContractDetail> contractDetails) {
+        this.contractDetails = contractDetails;
+    }
+
 }

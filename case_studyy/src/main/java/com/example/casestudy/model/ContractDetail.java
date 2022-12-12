@@ -9,10 +9,10 @@ public class ContractDetail {
     private int id;
     private int quantity;
 
-    @ManyToOne
+    @ManyToOne()
     private Contract contract;
 
-    @ManyToOne
+    @ManyToOne()
     private AttachFacility attachFacility;
 
     public ContractDetail() {

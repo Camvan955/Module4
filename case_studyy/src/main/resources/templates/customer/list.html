@@ -9,8 +9,8 @@
 <div th:insert="~{layout::header}"></div>
 <div>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #046056">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-7 container">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 container">
             <a class="navbar-brand" href="#"></a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ">
@@ -26,16 +26,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <form class="d-flex">
+                    <input th:value="${name}" name="name" class="form-control me-2" type="search" placeholder="Tìm theo tên"
+                           aria-label="Search">
+                    <input th:value="${email}" name="email" class="form-control me-2" type="search" placeholder="Tìm theo Email"
+                           aria-label="Search">
+                    <select name="customerType" class="form-select"
+                            aria-label="Default select example" th:value="${customerTypeId}" >
+                        <option value="">--Loại Khách--</option>
+                        <option  th:each="customerType : ${customerTypes}"
+                                 th:value="${customerType.id}" th:selected="${customerTypeId==customerType.id}"
+                                 th:text="${customerType.name}">
+                        </option>
+                    </select>
+                    <button class="btn btn-success" type="submit">Tìm</button>
+                </form>
+            </div>
         </div>
     </nav>
 </div>
-
 <body>
 
 <h1 style="text-align: center ; margin-top: 20px">Danh Sách Khách Hàng</h1>
-
 
 <div class="row">
     <div class="col-md-1"></div>
@@ -80,7 +94,8 @@
                         <a th:href="@{/edit-customer/__${customer.id}__ }" class="btn btn-success">Edit</a>
                     </td>
                     <td>
-                        <a  th:onclick="|infoDelete('__${customer.id}__', '__${customer.name}__')|" data-bs-toggle="modal"
+                        <a th:onclick="|infoDelete('__${customer.id}__', '__${customer.name}__')|"
+                           data-bs-toggle="modal"
                            data-bs-target="#exampleModal"
                            class="btn btn-success">Delete</a>
                     </td>
@@ -98,7 +113,7 @@
 
     <span th:text="${listCustomerDto.number + 1}+'/'+${listCustomerDto.totalPages}"></span>
 
-    <a th:href="@{customers(page=${listCustomerDto.number + 1})}" th:if="${listCustomerDto.hasNext()}"
+    <a th:href="@{customers(page=${listCustomerDto.number + 1}, name=${name})}" th:if="${listCustomerDto.hasNext()}"
        class="btn btn-outline-success">Next</a>
 
 </div>
@@ -109,25 +124,25 @@
      style="margin-top: 100px">
     <div class="modal-dialog">
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" >Delete customer information</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <span style="color: white">You definitely want to delete ? </span><br>
-                    <span id="deleteName" ></span>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancel</button>
-                    <form th:action="@{/delete}" method="post">
-                        <input type="text" hidden name="id" id="deleteId">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--                    <h5 class="modal-title" id="exampleModalLabel" >Thông tin khách hàng cần xóa</h5>-->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <span>Bạn có muốn xóa khách hàng? </span><br>
+                <span id="deleteName"></span>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Trở lại</button>
+                <form th:action="@{/delete}" method="post">
+                    <input type="text" hidden name="id" id="deleteId">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+
+        </div>
 
     </div>
 </div>
@@ -143,6 +158,8 @@
 </body>
 
 <div th:insert="~{layout::footer}" style="margin-top: 15px"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 </html>

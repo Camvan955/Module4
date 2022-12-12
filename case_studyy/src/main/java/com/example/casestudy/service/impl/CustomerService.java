@@ -1,6 +1,6 @@
 package com.example.casestudy.service.impl;
 
-import com.example.casestudy.model.Customer;
+import com.example.casestudy.model.customer.Customer;
 import com.example.casestudy.repository.customer.ICustomerRepository;
 import com.example.casestudy.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) {
-       return customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> search(String name, String email, String customerType, Pageable pageable) {
-        return customerRepository.search(name, email,customerType, pageable);
+    public Page<Customer> searchByName(String name, String email, String customerType, Pageable pageable) {
+        return customerRepository.searchByName(name, email, customerType, pageable);
     }
 }

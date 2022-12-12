@@ -1,9 +1,7 @@
 package com.example.casestudy.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Division {
@@ -15,6 +13,8 @@ public class Division {
     public Division() {
     }
 
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
+    private List<Employee> employeeList;
     public Division(int id, String name) {
         this.id = id;
         this.name = name;

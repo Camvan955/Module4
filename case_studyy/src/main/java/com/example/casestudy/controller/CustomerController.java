@@ -1,7 +1,7 @@
 package com.example.casestudy.controller;
 
 import com.example.casestudy.dto.CustomerDto;
-import com.example.casestudy.model.Customer;
+import com.example.casestudy.model.customer.Customer;
 import com.example.casestudy.service.ICustomerService;
 import com.example.casestudy.service.ICustomerTypeService;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +30,14 @@ public class CustomerController {
 
 
     @GetMapping("customers")
-    public String ListCustomer(@RequestParam(defaultValue = "") String search, @PageableDefault(page = 0, size = 3) Pageable pageable, ModelMap modelMap) {
-        Page<Customer> customerPage = customerService.findAll(pageable);
-        modelMap.addAttribute("listCustomerDto", customerPage);
+    public String listCustomer(@RequestParam(defaultValue = "") String name,@RequestParam(defaultValue = "") String email,@RequestParam(defaultValue = "") String customerType, @PageableDefault(page = 0, size = 5) Pageable pageable, Model model) {
+        Page<Customer> customerList = customerService.searchByName(name, email, customerType, pageable);
+        model.addAttribute("listCustomerDto", customerList);
+        model.addAttribute("customerTypeList", customerService.findAll(pageable));
+        model.addAttribute("customerTypes", customerTypeService.findAll());
+        model.addAttribute("name", name);
+        model.addAttribute("email", email);
+        model.addAttribute("customerType", customerType);
         return "customer/list";
     }
 
@@ -82,18 +86,13 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-//    @PostMapping("/delete-customer/{id}")
-//    public String delete(@RequestParam int id) {
-//        customerService.remove(id);
-//        return "redirect:/customer/";
-//    }
-
     @PostMapping("/delete")
     public String delete(@RequestParam int id,RedirectAttributes redirectAttributes) {
         customerService.remove(id);
         redirectAttributes.addFlashAttribute("message","Xoá thành công");
         return "redirect:/customers";
     }
+
 
 
 }

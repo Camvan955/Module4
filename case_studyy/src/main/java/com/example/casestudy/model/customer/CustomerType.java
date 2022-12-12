@@ -1,4 +1,5 @@
-package com.example.casestudy.model;
+package com.example.casestudy.model.customer;
+
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +10,7 @@ public class CustomerType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(mappedBy = "customerType")
+    @OneToMany(mappedBy = "customerType", cascade = CascadeType.ALL)
     private Set<Customer> customers;
 
     public CustomerType() {

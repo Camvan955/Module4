@@ -1,12 +1,11 @@
-package com.example.casestudy.model;
+package com.example.casestudy.dto;
 
-import javax.persistence.*;
-import java.util.List;
+import com.example.casestudy.model.FacitilyType;
+import com.example.casestudy.model.RentType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FacilityDto {
     private int id;
     private String name;
     private int area;
@@ -17,20 +16,13 @@ public class Facility {
     private int numberOfFloors;
     private Double poolArea;
     private String facilityFree;
-
-    @ManyToOne()
+    private RentType rentType;
     private FacitilyType facitilyType;
 
-    @ManyToOne()
-    private RentType rentType;
-
-    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
-    private List<Contract> contractList;
-
-    public Facility() {
+    public FacilityDto() {
     }
 
-    public Facility(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, int numberOfFloors, Double poolArea, String facilityFree, FacitilyType facitilyType, RentType rentType) {
+    public FacilityDto(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, int numberOfFloors, Double poolArea, String facilityFree, RentType rentType, FacitilyType facitilyType) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -41,8 +33,16 @@ public class Facility {
         this.numberOfFloors = numberOfFloors;
         this.poolArea = poolArea;
         this.facilityFree = facilityFree;
-        this.facitilyType = facitilyType;
         this.rentType = rentType;
+        this.facitilyType = facitilyType;
+    }
+
+    public FacitilyType getFacitilyType() {
+        return facitilyType;
+    }
+
+    public void setFacitilyType(FacitilyType facitilyType) {
+        this.facitilyType = facitilyType;
     }
 
     public int getId() {
@@ -125,14 +125,6 @@ public class Facility {
         this.facilityFree = facilityFree;
     }
 
-    public FacitilyType getFacitilyType() {
-        return facitilyType;
-    }
-
-    public void setFacitilyType(FacitilyType facitilyType) {
-        this.facitilyType = facitilyType;
-    }
-
     public RentType getRentType() {
         return rentType;
     }
@@ -140,4 +132,5 @@ public class Facility {
     public void setRentType(RentType rentType) {
         this.rentType = rentType;
     }
+
 }

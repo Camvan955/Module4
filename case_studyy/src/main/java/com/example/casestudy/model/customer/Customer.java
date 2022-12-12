@@ -1,7 +1,9 @@
-package com.example.casestudy.model;
+package com.example.casestudy.model.customer;
+
+import com.example.casestudy.model.Contract;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -17,8 +19,10 @@ public class Customer {
     private String email;
     private String address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private CustomerType customerType;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Contract> contracts;
 
     public Customer() {
     }
