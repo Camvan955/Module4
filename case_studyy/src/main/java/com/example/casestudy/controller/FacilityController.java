@@ -84,12 +84,8 @@ public class FacilityController {
         Facility facility=new Facility();
         facilityService.save(facility);
         redirect.addFlashAttribute("message", "Sửa thành công!");
-        return "redirect:/customers";
+        return "redirect:/facilities";
     }
-
-
-
-
 
     @PostMapping("/delete-facility")
     public String delete(@RequestParam int id, RedirectAttributes redirectAttributes){
