@@ -2,8 +2,9 @@ package com.example.casestudy.dto;
 
 import com.example.casestudy.model.FacitilyType;
 import com.example.casestudy.model.RentType;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
+
+import javax.validation.constraints.NotNull;
+
 
 public class FacilityDto {
     private int id;

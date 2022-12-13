@@ -71,7 +71,6 @@ public class ProductController {
     @PostMapping("/search")
     public String search(@RequestParam String search, Model model){
         List<Product> productList=productService.findByName(search);
-//        model.addAttribute("product",productService.findByName(search));
         model.addAttribute("productList",productList);
         return "index";
     }

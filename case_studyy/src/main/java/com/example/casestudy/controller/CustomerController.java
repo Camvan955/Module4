@@ -65,7 +65,6 @@ public class CustomerController {
 
     @GetMapping("/edit-customer/{id}")
     public String edit(@RequestParam(defaultValue = "") String search
-            , @PageableDefault(page = 0, size = 3) Pageable pageable
             ,@PathVariable("id") Integer id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
         model.addAttribute("customerTypeList", customerTypeService.findAll());
@@ -83,7 +82,7 @@ public class CustomerController {
         BeanUtils.copyProperties(customerDto,customer);
         customerService.save(customer);
         redirect.addFlashAttribute("message", "Sửa thành công!");
-        return "redirect:/customer";
+        return "redirect:/customers";
     }
 
     @PostMapping("/delete")

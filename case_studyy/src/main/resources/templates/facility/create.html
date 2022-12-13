@@ -55,7 +55,7 @@
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
                                 <h2 class="text-center mb-5">THÊM MỚI DỊCH VỤ</h2>
-                                <form th:action="@{/save-facility}" th:object="${facilityDto}" method="post">
+                                <form th:action="@{/facilities/save-facility}" th:object="${facilityDto}" method="post">
                                     <div class="form-outline mb-4">
                                         <span>Tên dịch vụ:</span>
                                         <select id="nameFacility" th:field="*{facitilyType.id}" >
@@ -175,5 +175,4 @@
     })
 
 </script>
-
 </html>

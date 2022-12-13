@@ -14,5 +14,5 @@ public interface IGeneralService<T> {
 
     void remove(int id);
 
-    Page<T> searchByName(String name, String email,String customerType, Pageable pageable);
+//    Page<T> searchByName(String name, String email,String customerType, Pageable pageable);
 }

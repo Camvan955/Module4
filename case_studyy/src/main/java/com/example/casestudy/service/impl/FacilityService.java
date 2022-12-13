@@ -1,6 +1,8 @@
 package com.example.casestudy.service.impl;
 
+import com.example.casestudy.dto.FacilityView;
 import com.example.casestudy.model.Facility;
+import com.example.casestudy.model.FacitilyType;
 import com.example.casestudy.repository.facility.IFacilityRepository;
 import com.example.casestudy.service.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+
+
 public class FacilityService implements IFacilityService {
 
     @Autowired
@@ -37,7 +41,7 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public Page<Facility> searchByName(String name, String email, String customerType, Pageable pageable) {
-        return null;
+    public Page<Facility> searchView(String name, String facilityType, Pageable pageable) {
+        return facilityRepository.searchView(name, facilityType, pageable);
     }
 }
