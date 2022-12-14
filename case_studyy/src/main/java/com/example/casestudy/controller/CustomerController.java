@@ -73,7 +73,7 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public String update(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult , RedirectAttributes redirect, Model model) {
+    public String update(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult , RedirectAttributes redirect) {
         new CustomerDto().validate(customerDto,bindingResult);
         if(bindingResult.hasErrors()){
             return "customer/edit";

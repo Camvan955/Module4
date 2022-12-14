@@ -80,11 +80,13 @@ public class FacilityController {
         return "facility/edit";
     }
     @PostMapping("/update")
-    public String updateListFacility(@Validated @ModelAttribute("facilityDto") FacilityDto facilityDto, RedirectAttributes redirect, Model model) {
-        Facility facility=new Facility();
+    public String updateListFacility(@Validated @ModelAttribute("facilityDto") FacilityDto facilityDto, RedirectAttributes redirect) {
+        Facility facility = new Facility();
+        BeanUtils.copyProperties(facilityDto,facility);
         facilityService.save(facility);
         redirect.addFlashAttribute("message", "Sửa thành công!");
         return "redirect:/facilities";
+//        return "facility/list";
     }
 
     @PostMapping("/delete-facility")

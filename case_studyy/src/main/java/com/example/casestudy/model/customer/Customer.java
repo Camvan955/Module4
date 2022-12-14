@@ -18,16 +18,18 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String address;
+    @Column(columnDefinition = "bit default false")
+    private boolean flag;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private CustomerType customerType;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer")
     private List<Contract> contracts;
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String dateOfBirth, boolean gender, String idCard, String phoneNumber, String email, String address, CustomerType customerType) {
+    public Customer(int id, String name, String dateOfBirth, boolean gender, String idCard, String phoneNumber, String email, String address, boolean flag, CustomerType customerType, List<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -36,7 +38,17 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
+        this.flag = flag;
         this.customerType = customerType;
+        this.contracts = contracts;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public int getId() {
@@ -110,4 +122,5 @@ public class Customer {
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
     }
+
 }
