@@ -9,5 +9,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IContractService extends IGeneralService<Contract> {
+
     Page<ContractDto> findContract(Pageable pageable);
 }

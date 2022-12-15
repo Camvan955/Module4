@@ -69,17 +69,13 @@
                     <td th:text="${contract.getTotalAmount()}"></td>
 
                     <td>
-                        <button class="btn btn-primary" >+</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"  th:onclick="|show('__${contract.id}__', '__${contract.customerName}__')|" data-bs-target="#createContractDetail">
+                            +
+                        </button>
                     </td>
                     <td>
                         <button class="btn btn-primary">Các dịch vụ đi kèm</button>
                     </td>
-<!--                    <td>-->
-<!--                        <a th:onclick="|infoDelete('__${customer.id}__', '__${customer.name}__')|"-->
-<!--                           data-bs-toggle="modal"-->
-<!--                           data-bs-target="#exampleModal"-->
-<!--                        >Delete</a>-->
-<!--                    </td>-->
 
             </th:block>
         </table>
@@ -119,7 +115,6 @@
                                 <b>Số lượng:</b>
                                 <input type="text" name="username">
                             </div>
-<!--                            -->
                         </form>
                     </div>
                 </div>
@@ -136,17 +131,78 @@
     </div>
 </div>
 
-<!--<script>-->
-<!--    function infoDelete(id, name) {-->
-<!--        document.getElementById("deleteId").value = id;-->
-<!--        debugger-->
-<!--        document.getElementById("deleteName").innerText = name;-->
-<!--    }-->
-<!--</script>-->
 
+<!--Modal dấu + hợp đồng chi tiết á =)-->
+<div class="modal fade" id="createContractDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Thêm mới hợp đồng chi tiết</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <form th:action="@{/contract-detail/save}" method="post" th:object="${contractDetail}"
+                              class="form" role="form" id="myForm">
+                            <div class="form-group">
+                                <label>Customer Name</label>
+                                <input style="border-radius: 30px" disabled type="text" id="nameCus"
+                                       class="form-control"
+                                       placeholder="CUSTOMER NAME *"
+                                       value=""/>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="idContract">Contract Code</label>
+                                <input style="border-radius: 30px" readonly type="text" id="idContract"
+                                       th:field="*{contract}" class="form-control"
+                                       placeholder="ID *" value=""/>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input style="border-radius: 30px" id="quantity" type="number" min="0"
+                                       th:field="*{quantity}" class="form-control"
+                                       placeholder="QUANTITY *" value=""/>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label>Attach Facility</label>
+                                <select required id="attachFacility" class="form-select"
+                                        aria-label="Default select example"
+                                        th:field="*{attachFacility}" style="border-radius: 30px">
+                                    <option th:each="attachFacility : ${listAttachFacility}"
+                                            th:value="${attachFacility.id}"
+                                            th:text="${attachFacility.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <div th:insert="~{layout::footer}" style="margin-top: 15px"></div>
+
+<script>
+    function show(id, name) {
+        document.getElementById("idContract").value = id;
+        debugger
+        document.getElementById("nameCus").value = name;
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
